@@ -1,0 +1,33 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="API Automation Test Suite" parallel="classes" thread-count="6" verbose="1">
+
+    <listeners>
+        <listener class-name="org.example.framework.listeners.TestListener"/>
+    </listeners>
+
+    <!-- Test 1: Product Management Flow -->
+    <test name="Product Management Tests" preserve-order="true">
+        <classes>
+            <class name="org.example.testscases.products.CreateProduct"/>
+            <class name="org.example.testscases.products.RetrieveProductWithId"/>
+            <class name="org.example.testscases.products.RetriveAllProducts"/>
+            <class name="org.example.testscases.products.RetriveProductWithSlug"/>
+            <class name="org.example.testscases.products.RetrieveRelatedProductsById"/>
+            <class name="org.example.testscases.products.RetrieveRelatedProductsBySlug"/>
+            <class name="org.example.testscases.products.PaginationOfProdcuts"/>
+            <class name="org.example.testscases.products.UpdatinAProduct"/>
+            <class name="org.example.testscases.products.DeleteAProduct"/>
+        </classes>
+    </test>
+    <!-- Test 2: Category Management Flow -->
+    <test name="Category Management Tests" preserve-order="true">
+        <classes>
+            <class name="org.example.testscases.categories.CreateCategory"/>
+            <class name="org.example.testscases.categories.GetCategoryById"/>
+            <class name="org.example.testscases.categories.GetCategoryBySlug"/>
+            <class name="org.example.testscases.categories.UpdateCategory"/>
+            <class name="org.example.testscases.categories.GetProductsByCategory"/>
+            <class name="org.example.testscases.categories.DeleteCategory"/>
+        </classes>
+    </test>
+</suite>
