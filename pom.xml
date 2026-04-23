@@ -17,6 +17,7 @@
     <maven.compiler.source>25</maven.compiler.source>
     <maven.compiler.target>25</maven.compiler.target>
     <allure.version>2.24.0</allure.version>
+    <aspectj.version>1.9.22</aspectj.version>
   </properties>
 
   <dependencies>
@@ -108,42 +109,18 @@
 
     <!-- ❌ Removed junit 3.8.1                -->
 
-    <!-- ───────────────────────────────────── -->
-    <!-- Cucumber                              -->
-    <!-- ───────────────────────────────────── -->
+    <!-- ❌ Removed Cucumber dependencies -->
 
-    <dependency>
-      <groupId>io.cucumber</groupId>
-      <artifactId>cucumber-java</artifactId>
-      <version>7.14.0</version>
-      <scope>compile</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>io.cucumber</groupId>
-      <artifactId>cucumber-junit-platform-engine</artifactId>
-      <version>7.14.0</version>
-      <scope>compile</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>io.cucumber</groupId>
-      <artifactId>cucumber-picocontainer</artifactId>
-      <version>7.14.0</version>
-      <scope>compile</scope>
-    </dependency>
 
     <!-- ───────────────────────────────────── -->
     <!-- Allure                                -->
     <!-- ───────────────────────────────────── -->
 
-    <!-- ❌ Removed allure-testng              -->
-
     <dependency>
       <groupId>io.qameta.allure</groupId>
-      <artifactId>allure-cucumber7-jvm</artifactId>
+      <artifactId>allure-testng</artifactId>
       <version>${allure.version}</version>
-      <scope>compile</scope>
+      <scope>test</scope>
     </dependency>
 
     <dependency>
@@ -197,10 +174,14 @@
           <suiteXmlFiles>
             <suiteXmlFile>testng.xml</suiteXmlFile>
           </suiteXmlFiles>
+          <properties>
+            <property>
+              <name>listener</name>
+              <value>io.qameta.allure.testng.AllureTestNg</value>
+            </property>
+          </properties>
           <systemPropertyVariables>
-            <allure.results.directory>
-              ${project.build.directory}/allure-results
-            </allure.results.directory>
+            <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
           </systemPropertyVariables>
         </configuration>
         <dependencies>
@@ -219,6 +200,7 @@
         <version>2.12.0</version>
         <configuration>
           <reportVersion>${allure.version}</reportVersion>
+          <resultsDirectory>${project.build.directory}/allure-results</resultsDirectory>
         </configuration>
       </plugin>
 

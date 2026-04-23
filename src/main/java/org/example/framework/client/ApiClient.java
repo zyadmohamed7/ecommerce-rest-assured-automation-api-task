@@ -13,6 +13,7 @@ public class ApiClient {
         return RetryHandler.handle(() -> {
             RequestSpecification request = given()
                     .spec(RequestSpecFactory.getRequestSpec())
+                    .filter(new io.qameta.allure.restassured.AllureRestAssured())
                     .log().ifValidationFails();
 
             if (body != null) {
@@ -27,6 +28,6 @@ public class ApiClient {
                     .spec(RequestSpecFactory.getResponseSpec())
                     .extract()
                     .response();
-        }, 5, 3000);
+        }, 1, 3000);
     }
 }

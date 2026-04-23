@@ -1,134 +1,89 @@
-# 🚀 Hardened E-Commerce API Automation Framework (BDD)
+# 🚀 E-Commerce API Automation Task
 
-A professional-grade REST API automation engine built with **Java**, **Rest-Assured**, and **Cucumber 7**. This framework is engineered for resilience, security hardening (IDOR/RBAC), and complex business logic validation.
+A simple REST API automation project built with **Java**, **Rest-Assured**, and **TestNG** for testing the **Platzi Fake Store API** (https://fakeapi.platzi.com/).
 
 ## 📋 Table of Contents
 
 - [✨ Features](#-features)
 - [🛠 Tech Stack](#-tech-stack)
 - [📁 Project Structure](#-project-structure)
-- [🛡️ Security & Business Logic](#-security--business-logic)
 - [🧪 Running Tests](#-running-tests)
-- [📊 Reporting & Logging](#-reporting--logging)
+- [📊 Reporting](#-reporting)
+- [📝 Tasks for Later](#-tasks-for-later)
 - [👨‍💻 Author](#-author)
 
 ---
 
 ## ✨ Features
 
-- ✅ **Behavior Driven Development (BDD)** - Pure Cucumber JVM 7 implementation.
-- ✅ **Clean Architecture** - Distinguishing between "Framework" logic and "Test" implementation.
-- ✅ **Resilience (Self-Healing)** - Custom `RetryHandler` with exponential backoff for flaky endpoints.
-- ✅ **Security Hardening** - Proactive IDOR isolation checks and Role-Based Access Control (RBAC) validation.
-- ✅ **Mathematical Validation** - Automated checks for order total accuracy (`Price * Quantity == Total`).
-- ✅ **State Management** - Clean dependency injection using **PicoContainer** (`TestContext`).
-- ✅ **Advanced Data Generation** - Intelligent POJO-based data providers with **JavaFaker**.
-- ✅ **CI/CD Ready** - Maven-based execution with flexible tag filtering.
+- **TestNG Test Engine** - Used for running tests using `testng.xml`.
+- **Rest-Assured** - Used to send HTTP requests and validate responses.
+- **Data Generation** - Generates random test data using **JavaFaker**.
+- **Allure Integration** - Generates HTML test reports.
+- **DTO Pattern** - Organizes Request and Response payloads into separate Java classes.
 
 ---
 
 ## 🛠 Tech Stack
 
-| Technology | Purpose |
-|------------|---------|
-| **Java 21/17** | Core Programming Language |
-| **Cucumber 7** | BDD Framework & Test Runner |
-| **JUnit 5** | Underlying Test Engine |
-| **Rest Assured** | DSL for REST API Testing |
-| **PicoContainer** | Dependency Injection (Shared State) |
-| **Log4j2 + SLF4J** | Professional Logging System |
-| **Hamcrest** | Readable Assertion DSL |
-| **Jackson** | JSON Serialization/Deserialization |
-| **Allure Report** | Professional HTML Reporting & Visualization |
-| **Owner** | Environment & Properties Management |
+- **Java**
+- **TestNG**
+- **Rest Assured**
+- **Jackson**
+- **JavaFaker**
+- **Allure Report**
 
 ---
 
 ## 📁 Project Structure
 
-```
+```text
 ProjectRoot/
 ├── src/main/java/org/example/framework/ 
-│   ├── apis/               # Fluent API Wrapper classes
-│   ├── auth/               # Global Token & Session Management
-│   ├── client/             # Resilience-aware Base Client (ApiClient)
-│   ├── config/             # Routes (Endpoints) & Configuration
-│   ├── assertions/         # Domain-Specific Assertions (ApiAssert)
-│   └── utils/              # Resiliency Handlers & Logger Wrappers
+│   ├── apis/               # API endpoints (ProductsApi, CategoriesApi)
+│   ├── client/             # API Client to send requests
+│   └── dto/                # Data Transfer Objects (Requests & Responses)
 ├── src/test/java/org/example/
-│   ├── context/            # PicoContainer TestContext (Shared State)
-│   ├── stepdefinitions/    # Glue Code for Feature files
-│   ├── hooks/              # Scenario Hooks (Setup/Teardown)
-│   └── runners/            # Cucumber JUnit 5 Runners
-├── src/test/resources/
-│   ├── features/           # Gherkin Scenarios (Hardening/Security/Logic)
-│   ├── Data/               # External Test Data (users.json)
-│   └── log4j2.xml          # Logging Configuration
-└── pom.xml                 # Maven Dependency Management
+│   ├── datagenerators/     # Test data creation
+│   └── testscases/         # TestNG Test Classes
+├── testng.xml              # TestNG Suite Configuration
+└── pom.xml                 # Maven configuration
 ```
-
----
-
-## 🛡️ Security & Business Logic
-
-This framework goes beyond standard CRUD testing by enforcing:
-
-### 1. IDOR Security Isolation
-Explicitly verify that orders belonging to User A are **invisible** and **inaccessible** to User B.
-*   *Feature*: `09_security_idor.feature`
-
-### 2. Role-Based Access Control (RBAC)
-Differentiate between `Admin` and `Customer` roles, verifying that restricted actions (like `DELETE /orders`) are blocked for non-admin users.
-*   *Feature*: `11_security_rbac.feature`
-
-### 3. Mathematical Total Accuracy
-The framework fetches the price of an item at creation, calculates the expected total based on quantity, and verifies that the API's `total` field is mathematically correct.
-*   *Feature*: `10_advanced_ordering.feature`
 
 ---
 
 ## 🧪 Running Tests
 
-Execution is simplified through Maven and Cucumber Tags.
+You can run the tests using Maven:
 
-### Run Full Regression
+### Run All Tests
 ```bash
 mvn clean test
 ```
 
-### Run by Specific Tags
-```bash
-# Run only security tests
-mvn test -D"cucumber.filter.tags=@security"
-
-# Run advanced business logic tests
-mvn test -D"cucumber.filter.tags=@ordering"
-
-# Run critical smoke suite
-mvn test -D"cucumber.filter.tags=@smoke"
-```
-
 ---
 
-### 📊 Allure Reporting (Recommended)
-This framework is tightly integrated with **Allure**. Every API call made through the `ApiClient` is automatically recorded with its headers, body, and response.
+## 📊 Reporting
 
-**To view the interactive dashboard:**
-1. Run your tests: `mvn clean test`
-2. Generate and open the report:
+This project uses **Allure** for test reporting.
+
+**To view the test report:**
+1. Run the tests: `mvn clean test`
+2. Open the report:
    ```bash
    mvn allure:serve
    ```
 
-### 📄 Standard Cucumber Reports
-Standard HTML summaries are also available in:
-- `target/cucumber-reports/index.html`
+---
 
-### 📝 Console Logging
-Powered by **Log4j2**, providing clean, actionable logs with colored headers for scenario boundaries. Logs include:
-- `[INFO]` - Request/Response summaries.
-- `[WARN]` - Retry attempts & Transient failures.
-- `[ERROR]` - Assertion failures & Structural issues.
+## 📝 Tasks for Later
+
+- [x] Create a TestNG `test.xml` file and include both test classes for Categories and Products.
+- [x] Run using `mvn` command to execute this `test.xml` file.
+- [ ] Push your project to a GitHub Repository.
+- [ ] Setup Jenkins on your machine.
+- [ ] Create a Jenkins project that runs the same MVN command each 12 hours.
+- [ ] Generate an XML report for the test results.
 
 ---
 
