@@ -16,7 +16,7 @@ A simple REST API automation project built with **Java**, **Rest-Assured**, and 
 
 ## ✨ Features
 
-- **TestNG Test Engine** - Used for running tests using `testng.xml`.
+- **TestNG Test Engine** - Used for running tests using `test.xml` with **parallel execution** (running multiple tests at the same time to speed up execution).
 - **Rest-Assured** - Used to send HTTP requests and validate responses.
 - **Data Generation** - Generates random test data using **JavaFaker**.
 - **Allure Integration** - Generates HTML test reports.
@@ -54,7 +54,7 @@ ProjectRoot/
 
 ## 🧪 Running Tests
 
-You can run the tests using Maven:
+You can run the tests using Maven. The tests are configured to run in **parallel** (up to 6 test classes at once) for faster execution.
 
 ### Run All Tests
 ```bash
