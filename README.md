@@ -80,10 +80,10 @@ This project uses **Allure** for test reporting.
 
 - [x] Create a TestNG `test.xml` file and include both test classes for Categories and Products.
 - [x] Run using `mvn` command to execute this `test.xml` file.
-- [ ] Push your project to a GitHub Repository.
-- [ ] Setup Jenkins on your machine.
-- [ ] Create a Jenkins project that runs the same MVN command each 12 hours.
-- [ ] Generate an XML report for the test results.
+- [x] Push your project to a GitHub Repository.
+- [x] Setup Jenkins on your machine.
+- [x] Create a Jenkins project that runs the same MVN command each 12 hours.
+- [x] Generate an XML report for the test results.
 
 ---
 
