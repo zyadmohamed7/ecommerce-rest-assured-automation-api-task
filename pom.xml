@@ -103,14 +103,6 @@
       <version>33.4.8-jre</version>
     </dependency>
 
-    <!-- ───────────────────────────────────── -->
-    <!-- JUnit                                 -->
-    <!-- ───────────────────────────────────── -->
-
-    <!-- ❌ Removed junit 3.8.1                -->
-
-    <!-- ❌ Removed Cucumber dependencies -->
-
 
     <!-- ───────────────────────────────────── -->
     <!-- Allure                                -->
@@ -165,7 +157,7 @@
         </configuration>
       </plugin>
 
-      <!-- Surefire — updated for JUnit Platform / Cucumber -->
+      <!-- Surefire -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
