@@ -4,7 +4,13 @@ import io.restassured.response.Response;
 import org.example.datagenerators.ProductDataGenerator;
 import org.example.framework.apis.ProductsApi;
 import org.testng.annotations.Test;
+import io.qameta.allure.Story;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 
+@Epic("E-Commerce API")
+@Feature("Product Management")
+@Story("Tests for deleting products")
 public class DeleteAProduct {
     @Test
     public void testDeleteProduct() {

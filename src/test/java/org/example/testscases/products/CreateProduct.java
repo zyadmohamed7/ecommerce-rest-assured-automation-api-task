@@ -4,6 +4,9 @@ import io.restassured.response.Response;
 import org.example.dto.requests.ProductRequest;
 import org.example.dto.responses.ProductResponse;
 import org.testng.annotations.Test;
+import io.qameta.allure.Story;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 
 import java.util.List;
 import java.util.Random;
@@ -16,6 +19,9 @@ import static org.example.framework.apis.ProductsApi.createProduct;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
+@Epic("E-Commerce API")
+@Feature("Product Management")
+@Story("Tests for creating products")
 public class CreateProduct {
     @Test
     public void testCreateProduct() {

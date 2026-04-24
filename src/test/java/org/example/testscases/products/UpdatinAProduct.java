@@ -4,9 +4,15 @@ import io.restassured.response.Response;
 import org.example.datagenerators.ProductDataGenerator;
 import org.example.framework.apis.ProductsApi;
 import org.testng.annotations.Test;
+import io.qameta.allure.Story;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 
 import static org.hamcrest.Matchers.*;
 
+@Epic("E-Commerce API")
+@Feature("Product Management")
+@Story("Tests for updating products")
 public class UpdatinAProduct {
     @Test
     public void testUpdateProduct() {

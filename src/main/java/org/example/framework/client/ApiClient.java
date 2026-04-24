@@ -28,6 +28,29 @@ public class ApiClient {
                     .spec(RequestSpecFactory.getResponseSpec())
                     .extract()
                     .response();
-        }, 1, 3000);
+        }, 2, 3000);
+    }
+
+    public static Response sendMultipart(String method, String endpoint, java.io.File file) {
+        return RetryHandler.handle(() -> {
+            RequestSpecification request = given()
+                    .spec(RequestSpecFactory.getRequestSpec())
+                    .filter(new io.qameta.allure.restassured.AllureRestAssured())
+                    .contentType("multipart/form-data")
+                    .log().ifValidationFails();
+
+            if (file != null) {
+                request.multiPart("file", file);
+            }
+
+            return request
+                    .when()
+                    .request(method, endpoint)
+                    .then()
+                    .log().ifValidationFails()
+                    .spec(RequestSpecFactory.getResponseSpec())
+                    .extract()
+                    .response();
+        }, 2, 3000);
     }
 }

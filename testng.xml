@@ -30,4 +30,47 @@
             <class name="org.example.testscases.categories.DeleteCategory"/>
         </classes>
     </test>
+    
+    <!-- Test 3: Users Management Flow -->
+    <test name="Users Management Tests" preserve-order="true">
+        <classes>
+            <class name="org.example.testscases.users.CreateUser"/>
+            <class name="org.example.testscases.users.GetUser"/>
+            <class name="org.example.testscases.users.RetrieveAllUsers"/>
+            <class name="org.example.testscases.users.UpdateUser"/>
+            <class name="org.example.testscases.users.DeleteUser"/>
+        </classes>
+    </test>
+
+    <!-- Test 4: Authentication Flow -->
+    <test name="Authentication Tests" preserve-order="true">
+        <classes>
+            <class name="org.example.testscases.auth.Login"/>
+            <class name="org.example.testscases.auth.GetProfile"/>
+        </classes>
+    </test>
+
+    <!-- Test 5: Files Flow -->
+    <test name="Files Tests" preserve-order="true">
+        <classes>
+            <class name="org.example.testscases.files.UploadFile"/>
+        </classes>
+    </test>
+
+    <!-- Test 6: Filter Products Flow -->
+    <test name="Filter Products Tests" preserve-order="true">
+        <classes>
+            <class name="org.example.testscases.filterproducts.FilterProducts"/>
+        </classes>
+    </test>
+
+    <!-- Test 7: Locations Flow -->
+    <test name="Locations Tests" preserve-order="true">
+        <classes>
+            <class name="org.example.testscases.locations.CreateLocation"/>
+            <class name="org.example.testscases.locations.GetLocation"/>
+            <class name="org.example.testscases.locations.UpdateLocation"/>
+            <class name="org.example.testscases.locations.DeleteLocation"/>
+        </classes>
+    </test>
 </suite>

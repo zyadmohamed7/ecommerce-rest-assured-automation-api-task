@@ -8,7 +8,7 @@ public class CategoryDataGenerator {
 
     public static CategoryRequest generateRandomCategory() {
         return CategoryRequest.builder()
-                .name(faker.commerce().department())
+                .name(faker.commerce().department() + " " + System.currentTimeMillis())
                 .image(faker.internet().image())
                 .build();
     }

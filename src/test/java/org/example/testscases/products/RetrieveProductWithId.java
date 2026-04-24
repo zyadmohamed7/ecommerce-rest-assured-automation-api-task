@@ -3,9 +3,15 @@ package org.example.testscases.products;
 import io.restassured.response.Response;
 import org.example.framework.apis.ProductsApi;
 import org.testng.annotations.Test;
+import io.qameta.allure.Story;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 
 import static org.hamcrest.Matchers.*;
 
+@Epic("E-Commerce API")
+@Feature("Product Management")
+@Story("Tests for retrieving products by ID")
 public class RetrieveProductWithId {
     @Test
     public void testRetrieveProductWithId() {

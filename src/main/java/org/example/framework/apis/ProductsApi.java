@@ -45,4 +45,15 @@ public class ProductsApi {
     public static Response Pagination(int offset, int limit) {
         return ApiClient.send("GET", Routes.PRODUCTS.getPath() + "?offset=" + offset + "&limit=" + limit, null);
     }
+
+    public static Response filterProducts(String title, Integer price) {
+        String queryParams = "";
+        if (title != null && !title.isEmpty()) {
+            queryParams += "?title=" + title;
+        }
+        if (price != null) {
+            queryParams += (queryParams.isEmpty() ? "?" : "&") + "price=" + price;
+        }
+        return ApiClient.send("GET", Routes.PRODUCTS.getPath() + queryParams, null);
+    }
 }

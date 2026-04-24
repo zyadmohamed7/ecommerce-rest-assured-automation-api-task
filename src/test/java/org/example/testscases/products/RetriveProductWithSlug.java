@@ -3,6 +3,9 @@ package org.example.testscases.products;
 import io.restassured.response.Response;
 import org.example.framework.apis.ProductsApi;
 import org.testng.annotations.Test;
+import io.qameta.allure.Story;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 
 import java.util.List;
 import java.util.Random;
@@ -10,6 +13,9 @@ import java.util.Random;
 import static org.example.framework.apis.CategoriesApi.getCategories;
 import static org.hamcrest.Matchers.*;
 
+@Epic("E-Commerce API")
+@Feature("Product Management")
+@Story("Tests for retrieving products by category slug")
 public class RetriveProductWithSlug {
     @Test
     public void testRetrieveProductWithSlug() {

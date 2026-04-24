@@ -1,10 +1,13 @@
 # 🚀 E-Commerce API Automation Task
 
-A simple REST API automation project built with **Java**, **Rest-Assured**, and **TestNG** for testing the **Platzi Fake Store API** (https://fakeapi.platzi.com/).
+A comprehensive REST API automation project built with **Java**, **Rest-Assured**, and **TestNG** that provides **100% test coverage** for the **Platzi Fake Store API** (https://fakeapi.platzi.com/).
+
+This suite validates the entire website's functionality, including complex CRUD operations, authentication, and file management.
 
 ## 📋 Table of Contents
 
 - [✨ Features](#-features)
+- [📦 Module Coverage](#-module-coverage)
 - [🛠 Tech Stack](#-tech-stack)
 - [📁 Project Structure](#-project-structure)
 - [🧪 Running Tests](#-running-tests)
@@ -16,11 +19,26 @@ A simple REST API automation project built with **Java**, **Rest-Assured**, and 
 
 ## ✨ Features
 
-- **TestNG Test Engine** - Used for running tests using `test.xml` with **parallel execution** (running multiple tests at the same time to speed up execution).
-- **Rest-Assured** - Used to send HTTP requests and validate responses.
-- **Data Generation** - Generates random test data using **JavaFaker**.
-- **Allure Integration** - Generates HTML test reports.
-- **DTO Pattern** - Organizes Request and Response payloads into separate Java classes.
+- **Full Website Coverage** - Comprehensive testing of all Platzi Fake Store API modules.
+- **Parallel Execution** - Configured via `testng.xml` to run 6 threads simultaneously for maximum speed.
+- **Advanced Allure Reporting** - Organized by **Epic**, **Feature**, and **Story** for detailed professional visualization.
+- **Centralized API Client** - Robust request handling with automated token management and retry logic.
+- **Dynamic Data Generation** - Realistic test data generated on-the-fly using **JavaFaker**.
+- **DTO Architecture** - Clean separation of request/response payloads using the Data Transfer Object pattern.
+
+---
+
+## 📦 Module Coverage
+
+The suite provides full CRUD and edge-case testing for:
+- **Products** (Create, Read, Update, Delete, Pagination)
+- **Categories** (Manage categories and filter products by category)
+- **Users** (Full user lifecycle management)
+- **Authentication** (JWT Login, Profile retrieval, and Token validation)
+- **Files** (Multipart file uploads)
+- **Filter Products** (Advanced filtering by title, price, and category)
+- **Locations** (Custom module implementation)
+
 
 ---
 
@@ -39,15 +57,28 @@ A simple REST API automation project built with **Java**, **Rest-Assured**, and 
 
 ```text
 ProjectRoot/
-├── src/main/java/org/example/framework/ 
-│   ├── apis/               # API endpoints (ProductsApi, CategoriesApi)
-│   ├── client/             # API Client to send requests
-│   └── dto/                # Data Transfer Objects (Requests & Responses)
+├── src/main/java/org/example/
+│   ├── dto/                # Data Transfer Objects (POJOs for Requests & Responses)
+│   ├── framework/          # Core Automation Engine
+│   │   ├── apis/           # API Endpoint wrappers (Products, Categories, Users, etc.)
+│   │   ├── auth/           # JWT Token and Session management
+│   │   ├── client/         # Centralized API Client (Rest-Assured wrapper)
+│   │   ├── config/         # Environment routes and project configuration
+│   │   ├── listeners/      # TestNG & Allure reporting listeners
+│   │   └── utils/          # Generic helper methods
+│   └── utils/              # Project-wide utility classes
 ├── src/test/java/org/example/
-│   ├── datagenerators/     # Test data creation
-│   └── testscases/         # TestNG Test Classes
-├── testng.xml              # TestNG Suite Configuration
-└── pom.xml                 # Maven configuration
+│   ├── datagenerators/     # Dynamic test data logic (JavaFaker)
+│   └── testscases/         # Organized test suites (Split by Module)
+│       ├── auth/           # Authentication tests
+│       ├── categories/     # Category CRUD tests
+│       ├── files/          # File upload tests
+│       ├── filterproducts/ # Product filtering tests
+│       ├── locations/      # Location management tests
+│       ├── products/       # Product CRUD & pagination tests
+│       └── users/          # User management tests
+├── testng.xml              # Suite configuration with parallel settings
+└── pom.xml                 # Maven dependencies and reporting plugins
 ```
 
 ---

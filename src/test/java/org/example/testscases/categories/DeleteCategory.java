@@ -5,9 +5,15 @@ import org.example.datagenerators.CategoryDataGenerator;
 import org.example.framework.apis.CategoriesApi;
 import org.example.dto.requests.CategoryRequest;
 import org.testng.annotations.Test;
+import io.qameta.allure.Story;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 
 import static org.hamcrest.Matchers.*;
 
+@Epic("E-Commerce API")
+@Feature("Categories")
+@Story("Tests for deleting categories")
 public class DeleteCategory {
 
     @Test
