@@ -15,9 +15,8 @@ import static org.hamcrest.Matchers.*;
 public class RetrieveRelatedProductsBySlug {
 
     @Test
-    public void testRetrieveRelatedBySlug_Valid() {
-        Response allProducts = ProductsApi.getProduct();
-        String productSlug = allProducts.jsonPath().getString("[0].slug");
+    public void userCanRetrieveRelatedProductsBySlug() {
+        String productSlug = getFirstProductSlug();
 
         Response response = ProductsApi.getRelatedProductsBySlug(productSlug);
 
@@ -27,13 +26,16 @@ public class RetrieveRelatedProductsBySlug {
     }
 
     @Test
-    public void testRetrieveRelatedBySlug_Invalid() {
+    public void relatedProductsForNonExistentSlugReturnsError() {
         String invalidSlug = "non-existent-slug-" + System.currentTimeMillis();
-
         Response response = ProductsApi.getRelatedProductsBySlug(invalidSlug);
 
         response.then()
                 .statusCode(400)
                 .body("name", equalTo("EntityNotFoundError"));
+    }
+
+    private String getFirstProductSlug() {
+        return ProductsApi.getProduct().jsonPath().getString("[0].slug");
     }
 }

@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 public class RetrieveAllUsers {
 
     @Test
-    public void testRetrieveAllUsers() {
+    public void userCanRetrieveAllRegisteredUsers() {
         UsersApi.getUsers()
                 .then()
                 .statusCode(200)

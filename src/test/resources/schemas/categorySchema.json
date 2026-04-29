@@ -1,0 +1,12 @@
+{
+  "type": "object",
+  "properties": {
+    "id": { "type": "number" },
+    "name": { "type": "string" },
+    "image": { "type": "string" },
+    "slug": { "type": "string" },
+    "creationAt": { "type": "string" },
+    "updatedAt": { "type": "string" }
+  },
+  "required": ["id", "name", "image", "slug", "creationAt", "updatedAt"]
+}

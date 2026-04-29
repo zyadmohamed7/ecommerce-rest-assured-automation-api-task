@@ -1,6 +1,5 @@
 package org.example.testscases.auth;
 
-import io.restassured.response.Response;
 import org.example.datagenerators.AuthDataGenerator;
 import org.example.dto.requests.LoginRequest;
 import org.example.framework.apis.AuthApi;
@@ -9,6 +8,7 @@ import io.qameta.allure.Story;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.*;
 
 @Epic("E-Commerce API")
@@ -17,22 +17,23 @@ import static org.hamcrest.Matchers.*;
 public class Login {
 
     @Test
-    public void testLogin() {
-        LoginRequest loginPayload = AuthDataGenerator.createValidLogin();
+    public void userCanLoginWithValidCredentials() {
+        LoginRequest credentials = AuthDataGenerator.createValidLogin();
 
-        AuthApi.login(loginPayload)
+        AuthApi.login(credentials)
                 .then()
                 .statusCode(201)
                 .body("access_token", notNullValue())
                 .body("refresh_token", notNullValue())
+                .body(matchesJsonSchemaInClasspath("schemas/loginSchema.json"))
                 .log().ifValidationFails();
     }
 
     @Test
-    public void testLoginWithInvalidCredentials() {
-        LoginRequest loginPayload = AuthDataGenerator.createInvalidLogin();
+    public void userCannotLoginWithWrongPassword() {
+        LoginRequest credentials = AuthDataGenerator.createInvalidLogin();
 
-        AuthApi.login(loginPayload)
+        AuthApi.login(credentials)
                 .then()
                 .statusCode(401)
                 .log().ifValidationFails();

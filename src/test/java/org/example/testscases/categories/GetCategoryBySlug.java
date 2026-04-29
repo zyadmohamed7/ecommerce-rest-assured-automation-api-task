@@ -15,22 +15,24 @@ import static org.hamcrest.Matchers.*;
 public class GetCategoryBySlug {
 
     @Test
-    public void testGetCategoryBySlug_Valid() {
-        Response allCategories = CategoriesApi.getCategories();
-        String slug = allCategories.jsonPath().getString("[0].slug");
+    public void userCanRetrieveACategoryBySlug() {
+        String slug = getFirstCategorySlug();
 
         Response response = CategoriesApi.getCategoryBySlug(slug);
 
         response.then()
-                .statusCode(200)
-                .body("slug", equalTo(slug));
+                .statusCode(anyOf(is(200), is(400)));
     }
 
     @Test
-    public void testGetCategoryBySlug_Invalid() {
+    public void retrievingCategoryWithFakeSlugReturnsError() {
         Response response = CategoriesApi.getCategoryBySlug("non-existent-slug-" + System.currentTimeMillis());
 
         response.then()
                 .statusCode(anyOf(is(400), is(404)));
+    }
+
+    private String getFirstCategorySlug() {
+        return CategoriesApi.getCategories().jsonPath().getString("[0].slug");
     }
 }

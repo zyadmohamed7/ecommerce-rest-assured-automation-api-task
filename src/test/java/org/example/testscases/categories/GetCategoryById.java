@@ -7,6 +7,7 @@ import io.qameta.allure.Story;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.*;
 
 @Epic("E-Commerce API")
@@ -15,22 +16,26 @@ import static org.hamcrest.Matchers.*;
 public class GetCategoryById {
 
     @Test
-    public void testGetCategoryById_Valid() {
-        Response allCategories = CategoriesApi.getCategories();
-        int categoryId = allCategories.jsonPath().getInt("[0].id");
+    public void userCanRetrieveACategoryById() {
+        int categoryId = getFirstCategoryId();
 
         Response response = CategoriesApi.getCategoryById(String.valueOf(categoryId));
 
         response.then()
                 .statusCode(200)
-                .body("id", equalTo(categoryId));
+                .body("id", equalTo(categoryId))
+                .body(matchesJsonSchemaInClasspath("schemas/categorySchema.json"));
     }
 
     @Test
-    public void testGetCategoryById_Invalid() {
+    public void retrievingNonExistentCategoryReturnsError() {
         Response response = CategoriesApi.getCategoryById("999999");
 
         response.then()
                 .statusCode(anyOf(is(400), is(404)));
+    }
+
+    private int getFirstCategoryId() {
+        return CategoriesApi.getCategories().jsonPath().getInt("[0].id");
     }
 }

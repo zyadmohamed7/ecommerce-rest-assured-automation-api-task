@@ -1,5 +1,6 @@
 package org.example.framework.client;
 
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.response.Response;
 import org.example.framework.config.RequestSpecFactory;
 import io.restassured.specification.RequestSpecification;
@@ -13,7 +14,7 @@ public class ApiClient {
         return RetryHandler.handle(() -> {
             RequestSpecification request = given()
                     .spec(RequestSpecFactory.getRequestSpec())
-                    .filter(new io.qameta.allure.restassured.AllureRestAssured())
+                    .filter(new AllureRestAssured())
                     .log().ifValidationFails();
 
             if (body != null) {
@@ -35,7 +36,7 @@ public class ApiClient {
         return RetryHandler.handle(() -> {
             RequestSpecification request = given()
                     .spec(RequestSpecFactory.getRequestSpec())
-                    .filter(new io.qameta.allure.restassured.AllureRestAssured())
+                    .filter(new AllureRestAssured())
                     .contentType("multipart/form-data")
                     .log().ifValidationFails();
 

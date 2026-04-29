@@ -1,6 +1,5 @@
 package org.example.testscases.locations;
 
-import io.restassured.response.Response;
 import org.example.datagenerators.LocationDataGenerator;
 import org.example.dto.requests.LocationRequest;
 import org.example.framework.apis.LocationsApi;
@@ -17,7 +16,7 @@ import static org.hamcrest.Matchers.*;
 public class UpdateLocation {
 
     @Test
-    public void testUpdateLocation() {
+    public void userCanUpdateAnExistingLocation() {
         LocationRequest updatePayload = LocationRequest.builder()
                 .name("Updated Location " + System.currentTimeMillis())
                 .address("Updated Address")
@@ -30,7 +29,7 @@ public class UpdateLocation {
     }
 
     @Test
-    public void testUpdateLocationWithInvalidId() {
+    public void userCannotUpdateNonExistentLocation() {
         LocationRequest updatePayload = LocationDataGenerator.createValidLocation();
 
         LocationsApi.updateLocation("999999", updatePayload)

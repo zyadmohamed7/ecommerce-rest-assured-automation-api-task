@@ -15,9 +15,8 @@ import static org.hamcrest.Matchers.*;
 public class RetrieveRelatedProductsById {
 
     @Test
-    public void testRetrieveRelatedById_Valid() {
-        Response allProducts = ProductsApi.getProduct();
-        int productId = allProducts.jsonPath().getInt("[0].id");
+    public void userCanRetrieveRelatedProductsById() {
+        int productId = getFirstProductId();
 
         Response response = ProductsApi.getRelatedProductsById(String.valueOf(productId));
 
@@ -27,13 +26,15 @@ public class RetrieveRelatedProductsById {
     }
 
     @Test
-    public void testRetrieveRelatedById_Invalid() {
-        String invalidId = "999999";
-
-        Response response = ProductsApi.getRelatedProductsById(invalidId);
+    public void relatedProductsForNonExistentIdReturnsError() {
+        Response response = ProductsApi.getRelatedProductsById("999999");
 
         response.then()
                 .statusCode(400)
                 .body("name", equalTo("EntityNotFoundError"));
+    }
+
+    private int getFirstProductId() {
+        return ProductsApi.getProduct().jsonPath().getInt("[0].id");
     }
 }

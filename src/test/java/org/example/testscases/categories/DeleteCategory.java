@@ -17,15 +17,11 @@ import static org.hamcrest.Matchers.*;
 public class DeleteCategory {
 
     @Test
-    public void testDeleteCategory_Valid() {
-        CategoryRequest category = CategoryDataGenerator.generateRandomCategory();
-        Response createResponse = CategoriesApi.createCategory(category);
-        createResponse.then().statusCode(201);
-        int categoryId = createResponse.jsonPath().getInt("id");
+    public void userCanDeleteAnExistingCategory() {
+        int categoryId = createCategoryAndReturnId();
 
-        Response response = CategoriesApi.deleteCategory(String.valueOf(categoryId));
-
-        response.then()
+        CategoriesApi.deleteCategory(String.valueOf(categoryId))
+                .then()
                 .statusCode(200);
 
         CategoriesApi.getCategoryById(String.valueOf(categoryId))
@@ -34,10 +30,17 @@ public class DeleteCategory {
     }
 
     @Test
-    public void testDeleteCategory_Invalid() {
+    public void deletingNonExistentCategoryReturnsError() {
         Response response = CategoriesApi.deleteCategory("999999");
 
         response.then()
                 .statusCode(anyOf(is(400), is(404)));
+    }
+
+    private int createCategoryAndReturnId() {
+        CategoryRequest category = CategoryDataGenerator.generateRandomCategory();
+        Response response = CategoriesApi.createCategory(category);
+        response.then().statusCode(201);
+        return response.jsonPath().getInt("id");
     }
 }

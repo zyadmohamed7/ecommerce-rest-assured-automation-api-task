@@ -1,7 +1,5 @@
 package org.example.testscases.filterproducts;
 
-import io.restassured.response.Response;
-import org.example.dto.responses.ProductResponse;
 import org.example.framework.apis.ProductsApi;
 import org.example.framework.client.ApiClient;
 import org.example.framework.config.Routes;
@@ -9,8 +7,6 @@ import org.testng.annotations.Test;
 import io.qameta.allure.Story;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
-
-import java.util.List;
 
 import static org.hamcrest.Matchers.*;
 
@@ -20,9 +16,10 @@ import static org.hamcrest.Matchers.*;
 public class FilterProducts {
 
     @Test
-    public void testFilterProductsByTitle() {
-        String validTitle = "Generic";
-        ProductsApi.filterProducts(validTitle, null)
+    public void userCanFilterProductsByTitle() {
+        String searchTerm = "Generic";
+
+        ProductsApi.filterProducts(searchTerm, null)
                 .then()
                 .statusCode(200)
                 .body("size()", greaterThanOrEqualTo(0))
@@ -30,7 +27,7 @@ public class FilterProducts {
     }
 
     @Test
-    public void testFilterProductsWithInvalidPrice() {
+    public void filteringWithInvalidPriceIsHandledGracefully() {
         ApiClient.send("GET", Routes.PRODUCTS.getPath() + "?price=invalid", null)
                 .then()
                 .statusCode(anyOf(is(400), is(200)))

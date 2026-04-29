@@ -15,9 +15,8 @@ import static org.hamcrest.Matchers.*;
 public class GetProductsByCategory {
 
     @Test
-    public void testGetProductsByCategory_Valid() {
-        Response allCategories = CategoriesApi.getCategories();
-        int categoryId = allCategories.jsonPath().getInt("[0].id");
+    public void userCanViewProductsInACategory() {
+        int categoryId = getFirstCategoryId();
 
         Response response = CategoriesApi.getProductsByCategoryId(String.valueOf(categoryId));
 
@@ -27,11 +26,15 @@ public class GetProductsByCategory {
     }
 
     @Test
-    public void testGetProductsByCategory_Invalid() {
+    public void viewingProductsInNonExistentCategoryReturnsEmpty() {
         Response response = CategoriesApi.getProductsByCategoryId("999999");
 
         response.then()
                 .statusCode(200)
                 .body("size()", is(0));
+    }
+
+    private int getFirstCategoryId() {
+        return CategoriesApi.getCategories().jsonPath().getInt("[0].id");
     }
 }

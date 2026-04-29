@@ -30,7 +30,7 @@ This suite validates the entire website's functionality, including complex CRUD 
 
 ## 📦 Module Coverage
 
-The suite provides full CRUD and edge-case testing for:
+The suite provides full CRUD testing for:
 - **Products** (Create, Read, Update, Delete, Pagination)
 - **Categories** (Manage categories and filter products by category)
 - **Users** (Full user lifecycle management)

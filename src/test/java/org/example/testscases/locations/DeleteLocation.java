@@ -1,6 +1,5 @@
 package org.example.testscases.locations;
 
-import io.restassured.response.Response;
 import org.example.framework.apis.LocationsApi;
 import org.testng.annotations.Test;
 import io.qameta.allure.Story;
@@ -15,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 public class DeleteLocation {
 
     @Test
-    public void testDeleteLocation() {
+    public void userCanDeleteALocation() {
         LocationsApi.deleteLocation("1")
                 .then()
                 .statusCode(anyOf(is(200), is(404)))
@@ -23,7 +22,7 @@ public class DeleteLocation {
     }
 
     @Test
-    public void testDeleteLocationWithInvalidId() {
+    public void deletingNonExistentLocationReturnsError() {
         LocationsApi.deleteLocation("999999")
                 .then()
                 .statusCode(anyOf(is(400), is(404)))

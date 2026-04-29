@@ -42,6 +42,7 @@ public class ProductsApi {
     public static Response deleteProduct(String id) {
         return ApiClient.send("DELETE", Routes.PRODUCTS.getPath() + "/" + id, null);
     }
+
     public static Response Pagination(int offset, int limit) {
         return ApiClient.send("GET", Routes.PRODUCTS.getPath() + "?offset=" + offset + "&limit=" + limit, null);
     }

@@ -17,21 +17,21 @@ import static org.hamcrest.Matchers.*;
 @Feature("Product Management")
 @Story("Tests for retrieving products by category slug")
 public class RetriveProductWithSlug {
-    @Test
-    public void testRetrieveProductWithSlug() {
-        List<String> categorySlugs = getCategories().jsonPath().getList("slug");
-        String validSlug = categorySlugs.get(new Random().nextInt(categorySlugs.size()));
 
-        Response response = ProductsApi.getProductsByCategorySlug(validSlug);
+    @Test
+    public void userCanFilterProductsByCategorySlug() {
+        String slug = pickRandomCategorySlug();
+
+        Response response = ProductsApi.getProductsByCategorySlug(slug);
 
         response.then()
                 .statusCode(200)
-                .body("category.slug", everyItem(equalTo(validSlug)))
+                .body("category.slug", everyItem(equalTo(slug)))
                 .log().ifValidationFails();
     }
 
     @Test
-    public void testRetrieveProductWithInvalidSlug(){
+    public void filteringByNonExistentSlugReturnsEmptyList() {
         String invalidSlug = "non-existent-slug-" + System.currentTimeMillis();
 
         Response response = ProductsApi.getProductsByCategorySlug(invalidSlug);
@@ -40,5 +40,10 @@ public class RetriveProductWithSlug {
                 .statusCode(200)
                 .body("size()", is(0))
                 .log().ifValidationFails();
+    }
+
+    private String pickRandomCategorySlug() {
+        List<String> slugs = getCategories().jsonPath().getList("slug");
+        return slugs.get(new Random().nextInt(slugs.size()));
     }
 }

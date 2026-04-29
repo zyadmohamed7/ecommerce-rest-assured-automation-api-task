@@ -1,6 +1,5 @@
 package org.example.testscases.locations;
 
-import io.restassured.response.Response;
 import org.example.datagenerators.LocationDataGenerator;
 import org.example.dto.requests.LocationRequest;
 import org.example.framework.apis.LocationsApi;
@@ -17,18 +16,20 @@ import static org.hamcrest.Matchers.*;
 public class CreateLocation {
 
     @Test
-    public void testCreateLocation() {
-        LocationRequest requestPayload = LocationDataGenerator.createValidLocation();
-        LocationsApi.createLocation(requestPayload)
+    public void userCanCreateANewLocation() {
+        LocationRequest location = LocationDataGenerator.createValidLocation();
+
+        LocationsApi.createLocation(location)
                 .then()
                 .statusCode(anyOf(is(201), is(200), is(404)))
                 .log().ifValidationFails();
     }
 
     @Test
-    public void testCreateLocationWithInvalidData() {
-        LocationRequest requestPayload = LocationDataGenerator.createInvalidLocation();
-        LocationsApi.createLocation(requestPayload)
+    public void userCannotCreateLocationWithInvalidData() {
+        LocationRequest location = LocationDataGenerator.createInvalidLocation();
+
+        LocationsApi.createLocation(location)
                 .then()
                 .statusCode(anyOf(is(400), is(500), is(422), is(404)))
                 .log().ifValidationFails();

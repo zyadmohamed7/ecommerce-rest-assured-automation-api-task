@@ -9,7 +9,8 @@ public class ProductDataGenerator {
 
     private static final Faker faker = new Faker();
 
-    public static ProductRequest generateRandomProduct() {
+
+    public static ProductRequest aValidProduct() {
         return ProductRequest.builder()
                 .title(faker.commerce().productName())
                 .price(Double.parseDouble(faker.commerce().price(10.0, 1000.0)))
@@ -18,6 +19,7 @@ public class ProductDataGenerator {
                 .images(List.of(faker.internet().image()))
                 .build();
     }
+
 
     public static ProductRequest generateProductWithTitle(String title) {
         return ProductRequest.builder()
@@ -70,7 +72,7 @@ public class ProductDataGenerator {
                 .build();
     }
 
-    public static ProductRequest invalidProductWithNegativePrice() {
+    public static ProductRequest aProductWithNegativePrice() {
         return ProductRequest.builder()
                 .title(faker.commerce().productName())
                 .price(-50.0)
@@ -79,6 +81,7 @@ public class ProductDataGenerator {
                 .images(List.of(faker.internet().image()))
                 .build();
     }
+
 
     public static ProductRequest invalidProductWithInvalidCategory() {
         return ProductRequest.builder()
@@ -100,7 +103,7 @@ public class ProductDataGenerator {
                 .build();
     }
 
-    // ⚠️ Boundary
+    // boundary
     public static ProductRequest generateProductWithLongTitle() {
         return ProductRequest.builder()
                 .title(faker.lorem().characters(500))

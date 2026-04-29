@@ -11,6 +11,7 @@ import io.qameta.allure.Story;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.*;
 
 @Epic("E-Commerce API")
@@ -19,31 +20,38 @@ import static org.hamcrest.Matchers.*;
 public class GetProfile {
 
     @Test
-    public void testGetProfile() {
-        LoginRequest loginPayload = AuthDataGenerator.createValidLogin();
-        Response loginResponse = AuthApi.login(loginPayload);
-        loginResponse.then().statusCode(201);
-        String token = loginResponse.as(LoginResponse.class).getAccess_token();
-
+    public void authenticatedUserCanViewTheirProfile() {
+        String token = loginAndGetToken();
         AuthManager.setToken(token);
 
-        AuthApi.getProfile()
-                .then()
+        Response response = AuthApi.getProfile();
+
+        response.then()
                 .statusCode(200)
                 .body("email", notNullValue())
+                .body(matchesJsonSchemaInClasspath("schemas/profileSchema.json"))
                 .log().ifValidationFails();
+
         AuthManager.clear();
     }
 
     @Test
-    public void testGetProfileWithInvalidToken() {
+    public void unauthenticatedUserCannotViewProfile() {
         AuthManager.setToken("invalid-token-12345");
 
-        AuthApi.getProfile()
-                .then()
+        Response response = AuthApi.getProfile();
+
+        response.then()
                 .statusCode(401)
                 .log().ifValidationFails();
 
         AuthManager.clear();
+    }
+
+    private String loginAndGetToken() {
+        LoginRequest credentials = AuthDataGenerator.createValidLogin();
+        Response response = AuthApi.login(credentials);
+        response.then().statusCode(201);
+        return response.as(LoginResponse.class).getAccess_token();
     }
 }

@@ -1,7 +1,5 @@
 package org.example.testscases.files;
 
-import io.restassured.response.Response;
-import org.example.dto.responses.FileResponse;
 import org.example.framework.apis.FilesApi;
 import org.example.framework.client.ApiClient;
 import org.example.framework.config.Routes;
@@ -41,7 +39,7 @@ public class UploadFile {
     }
 
     @Test
-    public void testUploadFile() {
+    public void userCanUploadAFile() {
         FilesApi.uploadFile(dummyImage)
                 .then()
                 .statusCode(201)
@@ -51,7 +49,7 @@ public class UploadFile {
     }
 
     @Test
-    public void testUploadFileWithoutData() {
+    public void uploadingWithoutFileDataReturnsError() {
         ApiClient.send("POST", Routes.FILES_UPLOAD.getPath(), null)
                 .then()
                 .statusCode(anyOf(is(400), is(500), is(422)))
